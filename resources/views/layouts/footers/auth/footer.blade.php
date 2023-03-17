@@ -27,7 +27,7 @@
                     <li class="nav-item" style="margin-right: 20px;">
                     
                                 <a class="btn btn-outline-light w-100" href="javascript:;">
-                                <img src="img/mtpe.png" alt="Descripción de la imagen"  title="MINISTERIO DEL TRABAJO Y PROMOCION DEL EMPLEO">
+                                <img src="img/m.png" alt="Descripción de la imagen"  title="MINISTERIO DEL TRABAJO Y PROMOCION DEL EMPLEO">
                                 </a>
                     
                     </li>
