@@ -3,7 +3,7 @@
 
 @section('content')
 
-    @include('layouts.navbars.auth.topnav', ['title' => 'Dashboard'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Convocatorias'])
 
        
     <div class="container-fluid py-4">
@@ -11,36 +11,7 @@
         
         <div class="row">
 
-            <!-- @foreach ($datos as $item)
-            
-            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">{{ $item->empresa }}</p>
-                                    <h5 class="font-weight-bolder">
-                                        S/.{{ $item->remuneracion }}
-                                    </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">{{ $item->texto_anuncio }}</span><br>
-                                        Inicio: {{ $item->inicio }} fin:{{ $item->fin }} 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            @endforeach
-             -->
+          
         
            
                       
@@ -49,7 +20,8 @@
         <div class="row" id="myProducts">
             
 
-            @foreach ($datos as $item)
+          
+            @foreach ($convocatorias_activas as $convocatoria)
 
                 <p>
                 <div class="card" id="mycard">
@@ -60,12 +32,12 @@
                 </div> -->
 
                 <div class="card-body pt-2">
-                    <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">Oferta de Trabajo en:</span>
+                    <span class="text-gradient text-danger text-uppercase text-xs font-weight-bold my-2">Oferta de Trabajo en:</span>
                     <a href="javascript:;" class="card-title h5 d-block text-darker">
-                    {{ $item->empresa }}
+                    {{ $convocatoria->empresa }}
                     </a>
                     <p class="card-description mb-4">
-                    {{ $item->texto_anuncio }}
+                    {{ $convocatoria->texto_anuncio }}
                     </p>
                     <div class="author align-items-center">
 
@@ -75,25 +47,25 @@
                             @csrf
                             
                               <input type="hidden" name="archivo_cv_ruta" id="archivo_cv_ruta" value="{{ auth()->user()->archivo_cv_ruta }}">
-                              <input type="hidden" name="email_emp" id="email_emp" value="{{ $item->email_emp }}">
+                              <input type="hidden" name="email_emp" id="email_emp" value="{{ $convocatoria->email_emp }}">
 
                             
-                            <button type="submit" class="btn btn-primary btn-sm ms-auto">Postular Aquí&nbsp <i class="ni ni-send"></i></button>
+                            <button type="submit" class="btn btn-danger btn-sm ms-auto">Postular Aquí&nbsp <i class="ni ni-send"></i></button>
                           </form>
 
 
                     {{--  <a href="{{route('enviar-correo')}}">Postular Aquí&nbsp</a> <i class="ni ni-send"></i>  --}}
                     <div class="name ps-3">
-                        <span>Remuneracion S/.{{ $item->remuneracion }}</span>
+                        <span>Remuneracion S/.{{ $convocatoria->remuneracion }}</span>
                         <div class="stats">
-                        <small>Convocatoria empieza el dia: {{ $item->inicio}} </small>
+                        <small>Convocatoria empieza el dia: {{ $convocatoria->inicio}} </small>
                         </div>
                         
                     </div>
                     </div>
                 </div>
                 <div class="stats">
-                        <small>Convocatoria termina el dia: {{ $item->fin }} </small>
+                        <small>Convocatoria termina el dia: {{ $convocatoria->fin }} </small>
                         </div>
 
                 </div>

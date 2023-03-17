@@ -2,21 +2,47 @@
 
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Tu Perfil'])
+
+    <style>
+		.mi-div {
+			display: none;
+			background-color: lightgray;
+			padding: 10px;
+			margin-top: 10px;
+		}
+        .error {
+            color: red;
+            font-style: italic;
+}
+	</style>
+
+                                                
+
+
     <div class="card shadow-lg mx-4 card-profile-bottom">
         <div class="card-body p-3">
             <div class="row gx-4">
-                <div class="col-auto">
-                    <div class="avatar avatar-xl position-relative">
-                        <img src="/img/{{auth()->user()->user_img}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
-                    </div>
-                </div>
+                                                @if (auth()->user()->user_img == "")
+                                                <div class="avatar avatar-xl position-relative">
+
+                                                <img src="/img/nofoto.jpg"
+                                                class="w-100 border-radius-lg shadow-sm">
+                                                </div>
+                                                @else
+                                                <div class="col-auto">
+                                                    <div class="avatar avatar-xl position-relative">
+                                                        <img src="/img/{{auth()->user()->user_img}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                                                    </div>
+                                                </div>
+                                                @endif
+                
                 <div class="col-auto my-auto">
                     <div class="h-100">
                         <h5 class="mb-1">
                             {{ auth()->user()->nombres ?? 'nombres' }} {{ auth()->user()->apellido_paterno ?? 'Apellido' }}
                         </h5>
                         <p class="mb-0 font-weight-bold text-sm">
-                            Public Relations
+                            {{auth()->user()->user_rol }}
                         </p>
                     </div>
                 </div>
@@ -72,7 +98,8 @@
                             <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">DNI</label>
-                                        <input class="form-control" type="text" name="dni" id="dni" value="{{ old('dni', auth()->user()->dni) }}">
+                                        <input class="form-control" type="text" name="dni" id="dni" value="{{ old('dni', auth()->user()->dni) }}" pattern="[0-9]+" maxlength="8">
+                                        <span id="dni-error" style="color: red; display: none;">Por favor ingrese un DNI válido (Solo Numeros)</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -111,7 +138,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Celular / Telefono</label>
-                                        <input class="form-control" type="text" name="celular" value="{{ old('celular', auth()->user()->celular) }}">
+                                        <input class="form-control" type="text" name="celular" value="{{ old('celular', auth()->user()->celular) }}" pattern="[0-9]+" maxlength="9  " >
+                                        <span id="telefono-error" style="color: red; display: none;">Por favor ingrese un N° de Telefono/Celular válido (Solo Numeros)</span>
+                                        
+
                                     </div>                                    
                                 </div>
 
@@ -210,13 +240,13 @@
                                     <div class="form-group">
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Seleccione el archivo a subir</label>
-                                        <input class="form-control" type="file" id="archivo_cv_ruta" name="archivo_cv_ruta" value="{{auth()->user()->archivo_cv_ruta}}">
+                                        <input class="form-control" type="file" id="archivo_cv_ruta" name="archivo_cv_ruta" value="{{auth()->user()->archivo_cv_ruta}}" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <input class="form-control" type="hidden" name="user_rol" id="user_rol" value="usuario">
+                            
 
 
                             @if(auth()->user()->archivo_cv_ruta == "")
@@ -235,7 +265,8 @@
                                 </div>
                             </li>
                             @endif
-                                            
+                           
+                            @if(auth()->user()->user_img == "")
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Seleccione Su foto a subir</label>
@@ -243,19 +274,68 @@
                                     </div>
                                 </div>
                             </div>
+                            @else
 
+                           
+
+                            <button type="button" id="mostrar-btn" class="btn btn-danger">Subir otra Foto</button>
+                           
+
+                            <div class="mi-div" id="mi-div">
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Seleccione Su foto a subir</label>
+                                    <input class="form-control" type="file" id="user_img" name="user_img">
+                                    </div>
+                                </div>
+                            </div>
+
+                            @endif
+                            <div class="card-header pb-0">
+                            <div class="d-flex align-items-center">
+                                
+                                <button type="submit" class="btn btn-danger btn-sm ms-auto">Guardar</button>
+                            </div>
+                            </div>
+                            
 
 
                             
                                         
                         
-                        <div class="card-header pb-0">
-                            <div class="d-flex align-items-center">
-                                
-                                <button type="submit" class="btn btn-primary btn-sm ms-auto">Guardar</button>
-                            </div>
-                        </div>
+                        
+
+                            <script>
+                            var boton = document.getElementById("mostrar-btn");
+                            var div = document.getElementById("mi-div");
+
+                            boton.addEventListener("click", function() {
+                                div.style.display = "block";
+                            });
+
+                            document.querySelector('input[name="dni"]').addEventListener('input', function() {
+                            var dniInput = document.querySelector('input[name="dni"]');
+                            var dniError = document.querySelector('#dni-error');
+
+                            if (!dniInput.checkValidity()) {
+                                dniError.style.display = 'inline';
+                            } else {
+                                dniError.style.display = 'none';
+                            }
+                        });
+
+                        document.querySelector('input[name="celular"]').addEventListener('input', function() {
+                        var celularInput = document.querySelector('input[name="celular"]');
+                        var telefonoError = document.querySelector('#telefono-error');
+
+                        if (!celularInput.checkValidity()) {
+                            telefonoError.style.display = 'inline';
+                        } else {
+                            telefonoError.style.display = 'none';
+                        }
+                    });
+                    </script>
                     </form>
+
                     
 
                 </div>
@@ -267,34 +347,46 @@
 
                         <div class="col-md-4">
                             <div class="card card-profile">
-                                <img src="/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
+                                <img src="/img/background.jpg" alt="Image placeholder" class="card-img-top">
                                 <div class="row justify-content-center">
                                     <div class="col-4 col-lg-4 order-lg-2">
                                         <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
                                             <a href="javascript:;">
+                                                @if (auth()->user()->user_img == "")
+                                                <img src="/img/nofoto.jpg"
+                                                    class="rounded-circle img-fluid border border-2 border-white">
+                                                @else
                                                 <img src="/img/{{auth()->user()->user_img}}"
                                                     class="rounded-circle img-fluid border border-2 border-white">
+                                                @endif
+                                                
+
                                             </a>
                                         </div>
+                                        
                                     </div>
-                                </div>
-                                <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">      
                                     
-                                    <div class="card-header pb-0">
-                                        <div class="d-flex align-items-center">
-                                            
-                                            <button type="submit" class="btn btn-primary btn-sm ms-auto">Guardar</button>
-                                        </div>
-                                    </div> 
-                                                  
+                                </div>
+                                
+                    
+                                <div class="text-center mt-4">
+                            <h5>
+                            {{auth()->user()->nombres }} {{auth()->user()->apellido_paterno }}<span class="font-weight-light">, {{auth()->user()->edad }} años </span>
+                            </h5>
+                            <div class="h6 font-weight-300">
+                                <i class="ni location_pin mr-2"></i>{{auth()->user()->departamento }}, {{auth()->user()->provincia }}, {{auth()->user()->distrito }}
                             </div>
-
-
+                            <!-- <div class="h6 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+                            </div>
+                            <div>
+                                <i class="ni education_hat mr-2"></i>University of Computer Science
+                            </div> -->
+                        </div>
+                
+                    <div class="card-body pt-0">    
+                        
                     
-                    
-                    
-                    
-                    <div class="card-body pt-0">                   
 
 
 

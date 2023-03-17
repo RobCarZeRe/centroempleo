@@ -237,7 +237,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #ea3005;
+  color: #FF0000;
   text-decoration: none;
 }
 
@@ -24866,3 +24866,11 @@ pre[class*=language-] {
     overflow: auto !important;
   }
 }
+
+#carouselExampleControls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+

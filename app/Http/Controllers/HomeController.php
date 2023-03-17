@@ -39,10 +39,27 @@ class HomeController extends Controller
         // $datos = Anuncio::all();         
         // return view('pages.dashboard', compact('datos'));
 
-        $now = Carbon::now('America/Lima');
+        // $now = Carbon::now('America/Lima');
         
-        $datos = Anuncio::where('fin', '>=', $now)->get(); // obtener solo los anuncios que vencen hoy o después
-        return view('pages.dashboard', compact('datos'));
+        // $datos = Anuncio::where('fin', '>=', $now)->get(); // obtener solo los anuncios que vencen hoy o después
+        // return view('pages.dashboard', compact('datos'));
+        
+        $now = Carbon::now('America/Lima');   
+        $datos = Anuncio::all(); // obtener solo los anuncios que vencen hoy o después
+    
+        // Convertir la columna "fin" en objetos Carbon con fecha completa
+        foreach ($datos as $anuncio) {
+            $fechaHora = $anuncio->fin . ':00'; // Agregar segundos con ":00"
+            $anuncio->fin = Carbon::parse($fechaHora, 'America/Lima');
+        }
+    
+        $convocatorias_activas = $datos->where('fin', '>=', $now);
+        $convocatorias_pasadas = $datos->where('fin', '<', $now);
+    
+        return view('pages.dashboard', [
+            'convocatorias_activas' => $convocatorias_activas,
+            'convocatorias_pasadas' => $convocatorias_pasadas,
+        ]);
 
     }
 

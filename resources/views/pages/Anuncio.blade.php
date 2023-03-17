@@ -1,13 +1,13 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Anuncio'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Crear Anuncio'])
     <div class="card shadow-lg mx-4 card-profile-bottom">
         <div class="card-body p-3">
             <div class="row gx-4">
                 <div class="col-auto">
                     <div class="avatar avatar-xl position-relative">
-                        <img src="/img/team-2.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                        <img src="/img/{{auth()->user()->user_img}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                     </div>
                 </div>
                 <div class="col-auto my-auto">
@@ -17,7 +17,7 @@
                         
                         </h5>
                         <p class="mb-0 font-weight-bold text-sm">
-                            Public Relations
+                            {{auth()->user()->user_rol}}
                         </p>
                     </div>
                 </div>

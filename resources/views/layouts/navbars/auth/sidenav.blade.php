@@ -2,12 +2,16 @@
     id="sidenav-main">
 
     <div class="sidenav-header">
+        
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
+            
         <a class="navbar-brand m-0" href="{{ route('home') }}"
             target="_blank">
+
             
-            <span class="ms-3 font-weight-bold ">Bolsa de Trabajo MPT-GDES</span>
+            
+            <span class="ms-3 font-weight-bold ">Centro de Empleo Municipal</span>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -39,7 +43,7 @@
                 </a>
             </li>
 
-            @if (auth()->user()->user_rol == "admin") 
+            @if (auth()->user()->user_rol == "admin" || auth()->user()->user_rol == "superadmin") 
         
             <li class="nav-item">
                 <a class="nav-link {{ str_contains(request()->url(), 'user-management') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'user-management']) }}">
@@ -49,19 +53,6 @@
                     <span class="nav-link-text ms-1">Admin. de Usuarios</span>
                 </a>
             </li>
-            @else
-            <li class="nav-item" style="display:none;">
-                <a class="nav-link {{ str_contains(request()->url(), 'user-management') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'user-management']) }}">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-bullet-list-67 text-dark text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Admin. de Usuarios</span>
-                </a>
-            </li>
-
-
-            @endif
-
             <li class="nav-item mt-3 d-flex align-items-center">
                 <div class="ps-4">
                 <i class="ni ni-single-copy-04"></i>
@@ -86,7 +77,39 @@
                     <span class="nav-link-text ms-1">Ver Anuncio</span>
                 </a>
             </li>
-            <li class="nav-item">
+            @else
+            <li class="nav-item" style="display:none;">
+                <a class="nav-link {{ str_contains(request()->url(), 'user-management') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'user-management']) }}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-bullet-list-67 text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Admin. de Usuarios</span>
+                </a>
+            </li>
+            <li class="nav-item" style="display:none;">
+                  <a class="nav-link {{ str_contains(request()->url(), 'Anuncio') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'Anuncio']) }}"> {{-- el primer anuncio es el nombre en web.php y el segundo es el nombre en la carpeta pages  --}}
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Crear anuncios</span>
+                </a>
+            </li>
+            <li class="nav-item" style="display:none;">
+                <a class="nav-link {{ str_contains(request()->url(), 'lista.anuncio') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'ListaAnuncio']) }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Ver Anuncio</span>
+                </a>
+            </li>
+
+
+            @endif
+
+            
+            <!-- <li class="nav-item">
                 <a class="nav-link {{ str_contains(request()->url(), 'tables') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'tables']) }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -94,8 +117,8 @@
                     </div>
                     <span class="nav-link-text ms-1">Tables</span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-link {{  str_contains(request()->url(), 'billing') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'billing']) }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -121,11 +144,13 @@
                     </div>
                     <span class="nav-link-text ms-1">RTL</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Enlaces de Interes</h6>
             </li>
-            <li class="nav-item">
+
+
+            <!-- <li class="nav-item">
                 <a class="nav-link {{ Route::currentRouteName() == 'profile-static' ? 'active' : '' }}" href="{{ route('profile-static') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -135,7 +160,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ route('sign-in-static') }}">
+                <a class="nav-link "{{ str_contains(request()->url(), 'register') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'register']) }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
@@ -151,7 +176,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Sign Up</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
     

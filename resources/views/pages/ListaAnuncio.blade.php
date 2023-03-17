@@ -1,7 +1,7 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'User Management'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Convocatorias'])
     <div class="row mt-4 mx-4">
         <div class="col-12">
             
@@ -23,6 +23,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Inicio</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fin</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+                                    
 
                                         
                                         
@@ -53,10 +54,8 @@
                                     </td>
                                     <td>
                                         <p class="text-sm font-weight-bold mb-0">Cerrar Convocatoria</p>
-                                        
-
-    
-                                        </td>
+                                       
+                                    </td>
                                     
                                 </tr>
                             @endforeach
@@ -64,6 +63,7 @@
                             </tbody>
                             
                         </table>
+                        
                        
 
                     </div>
